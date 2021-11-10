@@ -11,22 +11,22 @@ export let post;
 </script>
 
 <div class="post-card">
-  <div class="meta">
-    <div class="time">{formatTime(post.published_at)}</div>
-    <ul class="cats">
-      {#each post.categories as category}
-        <li>{ category.name }</li>
-      {/each}
-    </ul>
-  </div>
-  <div class="content">
-    {@html post.excerpt}
-  </div>
+	<div class="meta">
+		<div class="time">{formatTime(post.published_at)}</div>
+		<ul class="cats">
+			{#each post.categories as category}
+				<li>{ category.name }</li>
+			{/each}
+		</ul>
+	</div>
+	<div class="content">
+		{@html post.excerpt}
+	</div>
 </div>
 
 <style lang="scss">
 .post-card {
-  font-size: 16px;
+	font-size: 16px;
 	padding: 1em;
 	border-top: 1px dashed #eaeaea;
 	.meta {
@@ -41,7 +41,7 @@ export let post;
 		}
 		.cats {
 			display: flex;
-      flex-wrap: wrap;
+			flex-wrap: wrap;
 			list-style: none;
 			padding-left: 0;
 			margin: 0 0 10px;
@@ -56,7 +56,7 @@ export let post;
 	}
 	@media screen and (min-width: 768px) {
 		display: flex;
-    font-size: 20px;
+		font-size: 20px;
 		.meta {
 			flex: 0 0 140px;
 			display: block;
