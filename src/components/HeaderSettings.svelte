@@ -1,6 +1,8 @@
 <script>
 export let includeSport;
 export let excludedKeywordsInput;
+export let userDarkMode;
+
 </script>
 
 <header class="header-settings">
@@ -11,6 +13,10 @@ export let excludedKeywordsInput;
   <div class="field">
     <label for="excludedKeywords">Vynechaj (oddeľ čiarkou):</label>
     <input id="excludedKeywords" type="text" bind:value="{excludedKeywordsInput}">
+  </div>
+  <div class="field">
+    <input id="userDarkMode" type="checkbox" bind:checked="{userDarkMode}">
+    <label for="userDarkMode">Tmavý režim</label>
   </div>
 </header>
 

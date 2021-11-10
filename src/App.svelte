@@ -14,6 +14,7 @@ let posts = [];
 let includeSport = true;
 let excludedKeywords;
 let excludedKeywordsInput = '';
+let userDarkMode = false;
 
 // Reactive statements
 $: excludedKeywords = excludedKeywordsInput
@@ -60,10 +61,11 @@ onDestroy(() => {
 
 </script>
 
-<main>
+<main class:dark="{userDarkMode}">
 	<HeaderSettings
 		bind:includeSport="{includeSport}"
 		bind:excludedKeywordsInput="{excludedKeywordsInput}"
+		bind:userDarkMode="{userDarkMode}"
 	/>
 	{#each posts as post}
 		<PostCard
@@ -73,6 +75,15 @@ onDestroy(() => {
 </main>
 
 <style lang="scss">
+main.dark {
+	background-color: #111;
+	color: #ccc;
+}
+
+:global(main.dark .post-card) {
+	border-top-color: #444 !important;
+}
+
 :global(.post-card .content p) {
 	margin: 0;
 }

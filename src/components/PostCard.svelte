@@ -85,9 +85,6 @@ $: categories = post.categories.filter(v => v.slug !== 'hlavna');
 			}
 		}
 	}
-	.content {
-		color: #3a3a3a;
-	}
 	.tags {
 		display: flex;
 		flex-wrap: wrap;
@@ -102,9 +99,10 @@ $: categories = post.categories.filter(v => v.slug !== 'hlavna');
 			font-family: sans-serif;
 			font-size: 0.5em;
 			padding: 0.2em 0.4em 0;
-			border: 1px solid #ccc;
+			border: 1px solid currentColor;
 			text-transform: uppercase;
-			color: #ccc;
+			color: currentColor;
+			opacity: 0.5;
 		}
 }
 	@media screen and (min-width: 768px) {
