@@ -1,12 +1,15 @@
 <script>
 import { onDestroy, onMount } from 'svelte';
 import normalizeString from './util/normalizeString';
+import APPEARANCE from './util/appearanceEnum';
 
 import HeaderSettings from './components/HeaderSettings.svelte';
 import PostCard from './components/PostCard.svelte';
 
 // Variables
-const endpoint = 'https://dennikn.sk/api/v2/mpm/posts';
+const ENDPOINT = 'https://dennikn.sk/api/v2/mpm/posts';
+const DARK_MODE_QUERRY = '(prefers-color-scheme: dark)';
+const matchMedia = window.matchMedia;
 let intervalId = null;
 let postsRaw = [];
 let posts = [];
@@ -14,11 +17,16 @@ let posts = [];
 let includeSport = true;
 let excludedKeywords;
 let excludedKeywordsInput = '';
-let userDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+let appearance = APPEARANCE.SYSTEM;
+let systemAppearance = matchMedia && matchMedia(DARK_MODE_QUERRY).matches
+	? APPEARANCE.DARK
+	: APPEARANCE.LIGHT;
 
 // Listeners
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-	userDarkMode = e.matches;
+matchMedia(DARK_MODE_QUERRY).addEventListener('change', e => {
+	systemAppearance = e.matches
+		? APPEARANCE.DARK
+		: APPEARANCE.LIGHT;
 });
 
 // Reactive statements
@@ -39,10 +47,13 @@ $: posts = postsRaw.filter(post => {
 	}
 	return true;
 })
+$: shouldRenderInDarkMode = appearance === APPEARANCE.DARK
+	|| appearance === APPEARANCE.SYSTEM
+		&& systemAppearance === APPEARANCE.DARK;
 
 // Methods
 const fetchData = async () => {
-	const response = await fetch(endpoint);
+	const response = await fetch(ENDPOINT);
 	const json = await response.json();
 	postsRaw = json.posts;
 }
@@ -66,11 +77,11 @@ onDestroy(() => {
 
 </script>
 
-<main class:dark="{userDarkMode}">
+<main class:dark="{shouldRenderInDarkMode}">
 	<HeaderSettings
 		bind:includeSport="{includeSport}"
 		bind:excludedKeywordsInput="{excludedKeywordsInput}"
-		bind:userDarkMode="{userDarkMode}"
+		bind:appearance="{appearance}"
 	/>
 	{#each posts as post}
 		<PostCard
