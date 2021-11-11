@@ -14,7 +14,12 @@ let posts = [];
 let includeSport = true;
 let excludedKeywords;
 let excludedKeywordsInput = '';
-let userDarkMode = false;
+let userDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+// Listeners
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+	userDarkMode = e.matches;
+});
 
 // Reactive statements
 $: excludedKeywords = excludedKeywordsInput
