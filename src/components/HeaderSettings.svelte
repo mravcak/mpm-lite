@@ -1,7 +1,9 @@
 <script>
+import APPEARANCE from '../util/appearanceEnum';
+
 export let includeSport;
 export let excludedKeywordsInput;
-export let userDarkMode;
+export let appearance;
 
 </script>
 
@@ -15,8 +17,12 @@ export let userDarkMode;
     <input id="excludedKeywords" type="text" bind:value="{excludedKeywordsInput}">
   </div>
   <div class="field">
-    <input id="userDarkMode" type="checkbox" bind:checked="{userDarkMode}">
-    <label for="userDarkMode">Tmavý režim</label>
+    <label for="appearance">Vzhľad</label>
+    <select id="appearance" bind:value="{appearance}">
+			<option value="{APPEARANCE.SYSTEM}">Podľa systému</option>
+			<option value="{APPEARANCE.LIGHT}">Svetlý</option>
+			<option value="{APPEARANCE.DARK}">Tmavý</option>
+		</select>
   </div>
 </header>
 
