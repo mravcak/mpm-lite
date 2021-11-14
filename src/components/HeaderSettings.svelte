@@ -9,16 +9,16 @@ export let appearance;
 
 <header class="header-settings">
   <div class="field">
-    <input id="includeSport" type="checkbox" bind:checked="{includeSport}">
-    <label for="includeSport">Zobraz šport</label>
+    <input class="checkbox" id="includeSport" type="checkbox" bind:checked="{includeSport}">
+    <label class="label" for="includeSport">Zobraz šport</label>
   </div>
   <div class="field">
-    <label for="excludedKeywords">Vynechaj (oddeľ čiarkou):</label>
-    <input id="excludedKeywords" type="text" bind:value="{excludedKeywordsInput}">
+    <label class="label" for="excludedKeywords">Vynechaj (oddeľ čiarkou):</label>
+    <input class="control" id="excludedKeywords" type="text" bind:value="{excludedKeywordsInput}">
   </div>
   <div class="field">
-    <label for="appearance">Vzhľad</label>
-    <select id="appearance" bind:value="{appearance}">
+    <label class="label" for="appearance">Vzhľad</label>
+    <select class="control" id="appearance" bind:value="{appearance}">
 			<option value="{APPEARANCE.SYSTEM}">Podľa systému</option>
 			<option value="{APPEARANCE.LIGHT}">Svetlý</option>
 			<option value="{APPEARANCE.DARK}">Tmavý</option>
@@ -33,12 +33,16 @@ export let appearance;
 		display: flex;
 		align-items: center;
 		margin-bottom: 1em;
-		label {
+		.checkbox {
 			margin-right: 0.5em;
 		}
-		input {
+		.label {
+			flex: 0 0 50%;
+		}
+		.control {
 			margin-bottom: 0;
 			margin-right: 0.5em;
+			flex: 0 0 50%;
 		}
 	}
 	@media screen and (min-width: 768px) {
@@ -48,6 +52,12 @@ export let appearance;
 		.field {
 			margin-bottom: 0;
 			margin-right: 2em;
+			.label {
+				margin-right: 0.5em;
+			}
+			.label, .control {
+				flex: initial;
+			}
 		}
 	}
 }

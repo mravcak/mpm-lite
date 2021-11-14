@@ -36,12 +36,17 @@ label {
 input, button, select, textarea {
 	font-family: inherit;
 	font-size: inherit;
+	color: inherit;
 	-webkit-padding: 0.4em 0;
 	padding: 0.4em;
 	margin: 0;
 	box-sizing: border-box;
 	border: 1px solid #ccc;
+	background-color: transparent;
 	border-radius: 2px;
+}
+select option {
+	color: #3a3a3a
 }
 
 input:disabled {

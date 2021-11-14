@@ -50,6 +50,7 @@ $: posts = postsRaw.filter(post => {
 $: shouldRenderInDarkMode = appearance === APPEARANCE.DARK
 	|| appearance === APPEARANCE.SYSTEM
 		&& systemAppearance === APPEARANCE.DARK;
+$: document.body.className = shouldRenderInDarkMode ? 'dark' : '';
 
 // Methods
 const fetchData = async () => {
@@ -77,7 +78,7 @@ onDestroy(() => {
 
 </script>
 
-<main class:dark="{shouldRenderInDarkMode}">
+<main>
 	<HeaderSettings
 		bind:includeSport="{includeSport}"
 		bind:excludedKeywordsInput="{excludedKeywordsInput}"
@@ -91,7 +92,7 @@ onDestroy(() => {
 </main>
 
 <style lang="scss">
-main.dark {
+:global(body.dark) {
 	background-color: #111;
 	color: #ccc;
 }
@@ -106,5 +107,9 @@ main.dark {
 
 :global(.post-card .content a) {
 	color: #bd243d;
+}
+
+:global(body.dark .post-card .content a) {
+	color: #FB3B5B;
 }
 </style>
