@@ -23,7 +23,7 @@ let systemAppearance = matchMedia && matchMedia(DARK_MODE_QUERRY).matches
 	: APPEARANCE.LIGHT;
 
 // Listeners
-matchMedia(DARK_MODE_QUERRY).addEventListener('change', e => {
+matchMedia && matchMedia(DARK_MODE_QUERRY).addEventListener('change', e => {
 	systemAppearance = e.matches
 		? APPEARANCE.DARK
 		: APPEARANCE.LIGHT;
