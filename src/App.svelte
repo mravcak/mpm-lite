@@ -7,12 +7,13 @@ import HeaderSettings from './components/HeaderSettings.svelte';
 import PostCard from './components/PostCard.svelte';
 
 // Variables
-const ENDPOINT = 'https://dennikn.sk/api/v2/mpm/posts';
+const ENDPOINT = 'https://projects.mravcak.com/mpm-lite-proxy/';
 const DARK_MODE_QUERRY = '(prefers-color-scheme: dark)';
 const matchMedia = window.matchMedia;
 let intervalId = null;
 let postsRaw = [];
 let posts = [];
+let hasError = false;
 
 let includeSport = true;
 let excludedKeywords;
@@ -54,9 +55,14 @@ $: document.body.className = shouldRenderInDarkMode ? 'dark' : '';
 
 // Methods
 const fetchData = async () => {
-	const response = await fetch(ENDPOINT);
-	const json = await response.json();
-	postsRaw = json.posts;
+	try {
+		const response = await fetch(ENDPOINT);
+		const json = await response.json();
+		postsRaw = json.posts;
+		hasError = false;
+	} catch (e) {
+		hasError = true;
+	}
 }
 
 const startFetchData = () => {
@@ -84,6 +90,11 @@ onDestroy(() => {
 		bind:excludedKeywordsInput="{excludedKeywordsInput}"
 		bind:appearance="{appearance}"
 	/>
+	{#if hasError}
+		<p style="text-align: center">
+			Chyba pri načítavaní
+		</p>
+	{/if}
 	{#each posts as post}
 		<PostCard
 			post="{post}"
