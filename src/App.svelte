@@ -9,7 +9,7 @@ import PostCard from './components/PostCard.svelte';
 // Variables
 const ENDPOINT = 'https://projects.mravcak.com/mpm-lite-proxy/';
 const DARK_MODE_QUERRY = '(prefers-color-scheme: dark)';
-const matchMedia = window.matchMedia;
+const darkModeQuery = window.matchMedia && window.matchMedia(DARK_MODE_QUERRY);
 let intervalId = null;
 let postsRaw = [];
 let posts = [];
@@ -19,16 +19,23 @@ let includeSport = true;
 let excludedKeywords;
 let excludedKeywordsInput = '';
 let appearance = APPEARANCE.SYSTEM;
-let systemAppearance = matchMedia && matchMedia(DARK_MODE_QUERRY).matches
+let systemAppearance = darkModeQuery.matches
 	? APPEARANCE.DARK
 	: APPEARANCE.LIGHT;
 
 // Listeners
-matchMedia && matchMedia(DARK_MODE_QUERRY).addEventListener('change', e => {
+const appearanceChangeHandler = (e) => {
 	systemAppearance = e.matches
 		? APPEARANCE.DARK
 		: APPEARANCE.LIGHT;
-});
+};
+
+if (darkModeQuery?.addEventListener) {
+    darkModeQuery.addEventListener('change', appearanceChangeHandler);
+} else {
+	// fallback for legacy browsers
+    darkModeQuery.addListener(appearanceChangeHandler);
+}
 
 // Reactive statements
 $: excludedKeywords = excludedKeywordsInput
