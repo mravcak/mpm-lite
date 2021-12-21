@@ -1,4 +1,5 @@
 <script>
+import { onDestroy, onMount } from 'svelte';
 import { parseISO, lightFormat } from 'date-fns';
 
 const formatTime = (val) => {
@@ -7,8 +8,20 @@ const formatTime = (val) => {
 }
 
 export let post;
+let content;
 
 $: categories = post.categories.filter(v => v.slug !== 'hlavna');
+
+const setNoreferrerLinks = () => {
+	const contentLinks = content.querySelectorAll('a');
+	contentLinks.forEach(
+		anchor => anchor.setAttribute( 'rel', 'noreferrer noopener'),
+	);
+};
+
+onMount(() => {
+	setNoreferrerLinks();
+});
 
 </script>
 
@@ -22,14 +35,14 @@ $: categories = post.categories.filter(v => v.slug !== 'hlavna');
 		</ul>
 	</div>
 	<div class="body">
-		<div class="content">
+		<div class="content" bind:this={content}>
 			{@html post.excerpt}
 		</div>
 		{#if post.tags.length}
 			<ul class="tags">
 				{#each post.tags as tag}
 					<li>
-						<a href="{tag.url}">
+						<a href="{tag.url}" rel="noreferrer noopener">
 							{tag.name}
 						</a>
 					</li>
