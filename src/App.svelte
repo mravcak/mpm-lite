@@ -8,14 +8,14 @@ import PostCard from './components/PostCard.svelte';
 
 // Variables
 const ENDPOINT = 'https://projects.mravcak.com/mpm-lite-proxy/';
-const DARK_MODE_QUERRY = '(prefers-color-scheme: dark)';
-const darkModeQuery = window.matchMedia && window.matchMedia(DARK_MODE_QUERRY);
+const DARK_MODE_QUERY_STRING = '(prefers-color-scheme: dark)';
+const darkModeQuery = window.matchMedia && window.matchMedia(DARK_MODE_QUERY_STRING);
 const MAX_POSTS = 100;
+
 let intervalId = null;
 let postsRaw = [];
 let posts = [];
 let hasError = false;
-
 let includeSport = true;
 let excludedKeywords;
 let excludedKeywordsInput = '';
@@ -32,10 +32,10 @@ const appearanceChangeHandler = (e) => {
 };
 
 if (darkModeQuery?.addEventListener) {
-    darkModeQuery.addEventListener('change', appearanceChangeHandler);
+	darkModeQuery.addEventListener('change', appearanceChangeHandler);
 } else {
 	// fallback for legacy browsers
-    darkModeQuery.addListener(appearanceChangeHandler);
+	darkModeQuery.addListener(appearanceChangeHandler);
 }
 
 // Reactive statements
@@ -150,5 +150,4 @@ onDestroy(() => {
 	color: unset;
 	border-bottom: 1px solid #bd243d;
 }
-
 </style>
