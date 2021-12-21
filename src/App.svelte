@@ -124,10 +124,8 @@ onDestroy(() => {
 }
 
 :global(.post-card .content a) {
-	color: #bd243d;
+	color: unset;
+	border-bottom: 1px solid #bd243d;
 }
 
-:global(body.dark .post-card .content a) {
-	color: #FB3B5B;
-}
 </style>
