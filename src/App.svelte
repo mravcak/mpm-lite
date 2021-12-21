@@ -10,6 +10,7 @@ import PostCard from './components/PostCard.svelte';
 const ENDPOINT = 'https://projects.mravcak.com/mpm-lite-proxy/';
 const DARK_MODE_QUERRY = '(prefers-color-scheme: dark)';
 const darkModeQuery = window.matchMedia && window.matchMedia(DARK_MODE_QUERRY);
+const MAX_POSTS = 100;
 let intervalId = null;
 let postsRaw = [];
 let posts = [];
@@ -61,11 +62,33 @@ $: shouldRenderInDarkMode = appearance === APPEARANCE.DARK
 $: document.body.className = shouldRenderInDarkMode ? 'dark' : '';
 
 // Methods
+const addPosts = (newPosts) => {
+	if (postsRaw.length === 0) {
+		postsRaw = newPosts;
+		return;
+	}
+
+	const existingLastId = postsRaw[0].id;
+	const newLastId = newPosts[0].id;
+
+	if (existingLastId !== newLastId) {
+		const existingIds = postsRaw.map(post => post.id);
+		newPosts.forEach(post => {
+			if (!existingIds.includes(post.id)) {
+				postsRaw.unshift(post);
+			}
+		});
+
+		postsRaw.splice(MAX_POSTS);
+		postsRaw = [...postsRaw];
+	}
+}
+
 const fetchData = async () => {
 	try {
 		const response = await fetch(ENDPOINT);
 		const json = await response.json();
-		postsRaw = json.posts;
+		addPosts(json.posts);
 		hasError = false;
 	} catch (e) {
 		hasError = true;
