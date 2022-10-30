@@ -103,9 +103,10 @@ onMount(() => {
 		flex-wrap: wrap;
 		list-style: none;
 		padding-left: 0;
-		margin: 0.5em 0 0 0;
+		margin: 0.5em 0 -0.375em 0;
 		li {
 			margin-right: 0.5em;
+			margin-bottom: 0.375em;
 		}
 		li a {
 			display: block;
